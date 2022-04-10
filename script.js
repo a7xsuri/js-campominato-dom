@@ -45,20 +45,35 @@ function generaGriglia(numCells, CellsperRow) {
   }
   gridContainer.append(row);
 }
-
+let attempt = 0;
 function generaCella(num, CellsperRow) {
   let Cells = document.createElement("div");
   Cells.className = "box";
   Cells.style.width = `calc(100% / ${CellsperRow})`;
   Cells.style.height = `calc(100% / ${CellsperRow})`;
   Cells.innerHTML = `<span>${num}</span>`;
+
+  if(CellsBomb.includes(num)){
+  Cells.addEventListener("click", ColorBombCells);
+  return Cells;
+  }else{
   Cells.addEventListener("click", coloraCella);
   return Cells;
+  }
 }
   
+function ColorBombCells(){
+  this.classList.add("redBg");
+  this.classList.remove("pointer");
+  this.removeEventListener("click", coloraCella);
+  alert("hai perso indovinando " + attempt + " celle")
+  return;
+}
+
 function coloraCella() {
   this.classList.add("blueBg");
   this.classList.remove("pointer");
+  attempt++;
   this.removeEventListener("click", coloraCella);
 }
   
